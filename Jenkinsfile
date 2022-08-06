@@ -4,8 +4,8 @@ pipeline{
     // define environment
     environment {
         NEW_VERSION = "1.3.0"
-        // using credentials
-        // SERVER_CREDENTIALS = credentials('')
+        // using credentials that create frum Jenkins UI with id
+        SERVER_CREDENTIALS = credentials('server-credentials')
     }
     stages{
         stage("build"){
@@ -32,7 +32,7 @@ pipeline{
             // condition
             when {
                 expresstion {
-                    BRANCH_NAME == 'master' || BRANCH_NAME == 'main'
+                    BRANCH_NAME == 'master'
                 }
             }
             steps{
