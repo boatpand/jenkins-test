@@ -29,8 +29,8 @@ pipeline{
             // }
             steps{
                 echo "building the application"
-                // use value of parameter in environment
-                echo "building version ${NEW_VERSION}"
+                // use value of parameter in environment{}
+                // echo "building version ${NEW_VERSION}"
             }
             post{
                 success{
