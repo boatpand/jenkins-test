@@ -1,20 +1,32 @@
-// CODE_CHANGES = getGitChanges()
 pipeline{
     agent any
-    // define environment
-    environment {
-        NEW_VERSION = "1.3.0"
-        // using credentials that create frum Jenkins UI with id
-        SERVER_CREDENTIALS = credentials('server-credentials')
+
+    parameters {
+        // string(name: 'VERSION', defaultValue: '', description: 'version to deploy on prod')
+        choice(name: 'VERSION', choices: ['1.1.0','1.2.0','1.3.0'])
+        booleanParam(name: 'executeTests', defaultValue: true, description: '')
     }
+
+    // only 3 build tools available: gradle, maven, jdk
+    // tools {
+    //     maven 'Maven'
+    // }
+
+    // define environment
+    // environment {
+    //     NEW_VERSION = "1.3.0"
+    //     // using credentials that create frum Jenkins UI with id
+    //     SERVER_CREDENTIALS = credentials('server-credentials')
+    // }
+
     stages{
         stage("build"){
             // condition
-            // when {
-            //     expresstion {
-            //         BRANCH_NAME == 'master' && CODE_CHANGES == true
-            //     }
-            // }
+            when {
+                expresstion {
+                    params.executeTests
+                }
+            }
             steps{
                 echo "building the application"
                 // use value of parameter in environment
@@ -45,6 +57,20 @@ pipeline{
         stage("deploy"){
             steps{
                 echo "deploying the application"
+
+                // Method credentials in environment{}
+                // echo "deploying with ${SERVER_CREDENTIALS}"
+                // sh "${SERVER_CREDENTIALS}"
+
+                // Method withCredentials without environment{}
+                // withCredentials([
+                //     usernamePassword(credentials: 'server-credentials', usernameVariable: USER, passwordVariable: PWD)
+                // ]) {
+                //     script or command with USER, PWD parameter inside script
+                //     sh "some script ${USER} ${PWD}"
+                // }
+
+                echo "deploying version ${params.VERSION}"
             }
             post{
                 success{
