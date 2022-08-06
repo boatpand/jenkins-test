@@ -22,11 +22,11 @@ pipeline{
     stages{
         stage("build"){
             // condition
-            when {
-                expresstion {
-                    params.executeTests
-                }
-            }
+            // when {
+            //     expresstion {
+            //         params.executeTests
+            //     }
+            // }
             steps{
                 echo "building the application"
                 // use value of parameter in environment
