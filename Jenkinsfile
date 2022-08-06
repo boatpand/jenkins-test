@@ -9,6 +9,7 @@ pipeline{
     }
     stages{
         stage("build"){
+            // condition
             // when {
             //     expresstion {
             //         BRANCH_NAME == 'master' && CODE_CHANGES == true
@@ -29,12 +30,6 @@ pipeline{
             }
         }
         stage("test"){
-            // condition
-            when {
-                expresstion {
-                    BRANCH_NAME == 'master'
-                }
-            }
             steps{
                 echo "testing the application"
             }
